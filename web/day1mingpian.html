@@ -1,107 +1,87 @@
 <!DOCTYPE html>
+<!--
+  文件名：index.html
+  用途：简约风格个人名片网页 —— 页面结构层（HTML5 + 语义化标签）
+  说明：本文件只负责页面结构，所有样式统一放在 style.css 中，
+        HTML 结构与 CSS 样式完全分离书写，便于后期维护。
+-->
 <html lang="zh-CN">
 <head>
+    <!-- 字符编码：UTF-8，确保中文正常显示 -->
     <meta charset="UTF-8">
-    <!-- 移动端适配视口设置 -->
+    <!-- 视口设置：适配桌面与移动设备的响应式宽度 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简约可爱个人名片</title>
-    <style>
-        /* 全局样式重置，清除浏览器默认内外边距 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* 页面整体样式：弹性布局让卡片垂直水平居中，柔和浅粉背景营造可爱氛围 */
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff0f6;
-            font-family: "Microsoft YaHei", sans-serif;
-        }
-
-        /* 名片卡片容器样式 */
-        .business-card {
-            width: 340px;
-            padding: 42px 24px;
-            background-color: #ffffff;
-            border-radius: 12px; /* 要求12px圆角 */
-            box-shadow: 0 4px 16px rgba(255, 182, 193, 0.35); /* 柔和粉色调阴影，贴合可爱风格 */
-            /* 设置过渡动画，控制上浮与阴影变化速度 */
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-align: center;
-        }
-
-        /* 鼠标悬浮效果：卡片轻微上浮，阴影加深放大 */
-        .business-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 24px rgba(255, 182, 193, 0.45);
-        }
-
-        /* 圆形头像样式，增加可爱浅粉色描边 */
-        .avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%; /* 圆形 */
-            background-image: url("https://picsum.photos/id/1027/120/120");
-            background-size: cover;
-            background-position: center;
-            margin: 0 auto 22px;
-            border: 4px solid #ffe6ef;
-        }
-
-        /* 姓名样式，柔和深粉色文字 */
-        .user-name {
-            font-size: 25px;
-            color: #c86b85;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        /* 职位描述，浅灰柔和字体 */
-        .job-title {
-            font-size: 16px;
-            color: #998494;
-            margin-bottom: 26px;
-        }
-
-        /* 联系方式区域，行高拉开间距 */
-        .contact-box {
-            line-height: 2.1;
-            font-size: 15px;
-            color: #6b5c68;
-        }
-
-        /* 超链接美化，可爱浅粉色 */
-        .contact-box a {
-            color: #e88ea8;
-            text-decoration: none;
-            transition: color 0.25s ease;
-        }
-
-        .contact-box a:hover {
-            color: #c86b85;
-        }
-    </style>
+    <!-- 网页标题 -->
+    <title>个人名片 · 张三</title>
+    <!-- 关联外部样式表：实现结构与样式分离（唯一引入方式） -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <!-- 名片主体结构 -->
-    <div class="business-card">
-        <!-- 圆形头像 -->
-        <div class="avatar"></div>
-        <!-- 姓名 -->
-        <h2 class="user-name">吉克罗子</h2>
-        <!-- 职位 -->
-        <p class="job-title">程序设计师</p>
-        <!-- 联系方式模块 -->
-        <div class="contact-box">
-            <p> 邮箱：xiaotao@love.com</p>
-            <p> 电话：135‑6666‑8888</p>
-            <p> 个人主页：<a href="#">tao.design</a></p>
-        </div>
-    </div>
+    <!--
+        名片主体：使用 <main> 语义化标签包裹名片卡片。
+        <main> 标签代表页面主体内容，一个页面仅使用一次。
+    -->
+    <main class="card">
+
+        <!-- ==================== 头像区域 ==================== -->
+        <!--
+            <figure> 是带语义的内容容器，适合包裹头像。
+            默认使用 CSS 渐变圆 + 姓氏文字作为占位头像，
+            如需替换成真实照片，请将下方模块替换为：
+            <figure class="avatar">
+                <img src="你的头像图片.jpg" alt="头像">
+            </figure>
+        -->
+        <figure class="avatar" aria-label="头像：姓名首字">
+            <!-- 占位头像文字：可改为任意姓氏或首字母 -->
+            <span class="avatar-text">张</span>
+        </figure>
+
+        <!-- ==================== 基本身份信息 ==================== -->
+        <!-- 姓名：一级标题，语义上代表卡片核心内容 -->
+        <h1 class="name">吉克罗子</h1>
+        <!-- 职位：使用 <p> 标签，配合类名便于单独设置样式 -->
+        <p class="job-title">前端开发工程师</p>
+
+        <!-- ==================== 联系方式 ==================== -->
+        <!--
+            联系方式列表：使用 <ul> 列表结构，语义清晰。
+            每项为 <li>，内含一个内联 SVG 图标 + 对应联系信息。
+        -->
+        <ul class="contact-list">
+
+            <!-- 邮箱项 -->
+            <li class="contact-item">
+                <!-- SVG 图标：信封造型，stroke 颜色继承父元素文字色 -->
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="3" y="4" width="16" height="12" rx="1"/>
+                    <path d="M19 10 L22 16 H19"/>
+                </svg>
+                <a class="contact-link" href="mailto:zhangsan@example.com">zhangsan@example.com</a>
+            </li>
+
+            <!-- 电话项 -->
+            <li class="contact-item">
+                <!-- SVG 图标：电话造型，样式同上 -->
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <rect x="7" y="2" width="10" height="13" rx="2"/>
+                    <path d="M7 15 L12 19 H20"/>
+                </svg>
+                <a class="contact-link" href="tel:+8613800000000">+86 138 0000 0000</a>
+            </li>
+
+            <!-- 地址项 -->
+            <li class="contact-item">
+                <!-- SVG 图标：外圆 + 中心点构成简洁的定位符号 -->
+                <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="8"/>
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                </svg>
+                <span class="contact-text">四川省 · 成都市</span>
+            </li>
+        </ul>
+
+    </main>
 </body>
 </html>
