@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 移动端适配视口设置 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简约可爱个人名片</title>
+    <style>
+        /* 全局样式重置，清除浏览器默认内外边距 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 页面整体样式：弹性布局让卡片垂直水平居中，柔和浅粉背景营造可爱氛围 */
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff0f6;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 名片卡片容器样式 */
+        .business-card {
+            width: 340px;
+            padding: 42px 24px;
+            background-color: #ffffff;
+            border-radius: 12px; /* 要求12px圆角 */
+            box-shadow: 0 4px 16px rgba(255, 182, 193, 0.35); /* 柔和粉色调阴影，贴合可爱风格 */
+            /* 设置过渡动画，控制上浮与阴影变化速度 */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        /* 鼠标悬浮效果：卡片轻微上浮，阴影加深放大 */
+        .business-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(255, 182, 193, 0.45);
+        }
+
+        /* 圆形头像样式，增加可爱浅粉色描边 */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%; /* 圆形 */
+            background-image: url("https://picsum.photos/id/1027/120/120");
+            background-size: cover;
+            background-position: center;
+            margin: 0 auto 22px;
+            border: 4px solid #ffe6ef;
+        }
+
+        /* 姓名样式，柔和深粉色文字 */
+        .user-name {
+            font-size: 25px;
+            color: #c86b85;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* 职位描述，浅灰柔和字体 */
+        .job-title {
+            font-size: 16px;
+            color: #998494;
+            margin-bottom: 26px;
+        }
+
+        /* 联系方式区域，行高拉开间距 */
+        .contact-box {
+            line-height: 2.1;
+            font-size: 15px;
+            color: #6b5c68;
+        }
+
+        /* 超链接美化，可爱浅粉色 */
+        .contact-box a {
+            color: #e88ea8;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+
+        .contact-box a:hover {
+            color: #c86b85;
+        }
+    </style>
+</head>
+<body>
+    <!-- 名片主体结构 -->
+    <div class="business-card">
+        <!-- 圆形头像 -->
+        <div class="avatar"></div>
+        <!-- 姓名 -->
+        <h2 class="user-name">国王</h2>
+        <!-- 职位 -->
+        <p class="job-title">程序设计师</p>
+        <!-- 联系方式模块 -->
+        <div class="contact-box">
+            <p> 邮箱：xiaotao@love.com</p>
+            <p> 电话：135‑6666‑8888</p>
+            <p> 个人主页：<a href="#">tao.design</a></p>
+        </div>
+    </div>
+</body>
+</html>
