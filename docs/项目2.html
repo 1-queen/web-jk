@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        body{
+            text-align: center;
+            margin:0;
+        }
+        .wrap{
+            width: 900px;
+            height: 700px;
+            margin: 0 auto;
+            background-color:rgb(253, 244, 198); /* 橙色背景 */
+            padding:20px;
+        }
+        h2{
+            color:rgb(83, 142, 252);
+            margin-top:0;
+        }
+        .line{
+            height:3px;
+            background-color:rgb(189, 255, 145);
+            margin-bottom:20px;
+        }
+        /* 滚动容器 */
+        .scroll-box{
+            width:100%;
+            overflow:hidden;
+        }
+        .scroll-ul{
+            list-style-type: none;
+            text-align: center;
+            white-space: nowrap; /* 一行排列图片 */
+            padding:0;
+            margin:0;
+        }
+        .scroll-ul li{
+            display: inline-block;
+            margin: 1px 10px;
+        }
+        .scroll-ul li img{
+            width:120px;
+            height:80px;
+        }
+        a:active,a:visited,a:link{
+            text-decoration: none;
+        }
+        a:hover{
+            border-bottom: 5px solid #3f3c3c;
+        }
+        iframe{
+            margin-top:30px;
+            width:80%;
+            height:400px;
+        }
+    </style>
+    <title>灯箱画廊</title>
+</head>
+<body>
+    <div class="wrap">
+        <h2>简易灯箱画廊设计</h2>
+        <div class="line"></div>
+        <!-- 滚动图片区域 -->
+        <div class="scroll-box" id="scrollBox">
+            <ul class="scroll-ul" id="scrollUl">
+                <!-- target="content" 点击在iframe中打开大图 -->
+                <li><a href="../img/t1.jpg" target="content">
+                    <img src="../img/t1.jpg" alt="T1">
+                </a></li>
+                <li><a href="../img/t2.jpg" target="content">
+                    <img src="../img/t2.jpg" alt="T2">
+                </a></li>
+                <li><a href="../img/t3.jpg" target="content">
+                    <img src="../img/t3.jpg" alt="T3">
+                </a></li>
+                <li><a href="../img/t4.jpg" target="content"><img src="../img/t4.jpg" alt="T4">
+                </a></li>
+                <li><a href="../img/t5.jpg" target="content"><img src="../img/t5.jpg" alt="T5">
+                </a></li>
+                <li><a href="../img/t6.jpg" target="content"><img src="../img/t6.jpg" alt="T6">
+                </a></li>
+                <li><a href="../img/t7.jpg" target="content"><img src="../img/t7.jpg" alt="T7">
+                </a></li>
+            </ul>
+        </div>
+        <!-- 浮动框架name="content"，对应a标签target -->
+        <iframe src="../img/t1.jpg" frameborder="0" name="content"></iframe>
+    </div>
+<script>
+// 图片循环滚动代码
+let scrollUl = document.getElementById('scrollUl');
+let scrollBox = document.getElementById('scrollBox');
+let timer;
+// 复制一份li，实现无缝循环
+scrollUl.innerHTML += scrollUl.innerHTML;
+
+function move(){
+    scrollBox.scrollLeft += 1;
+    // 滚动到一半时重置位置，实现循环
+    if(scrollBox.scrollLeft >= scrollUl.offsetWidth / 2){
+        scrollBox.scrollLeft = 0;
+    }
+}
+// 启动滚动
+timer = setInterval(move,30);
+// 鼠标移入停止滚动
+scrollBox.onmouseover = function(){
+    clearInterval(timer);
+}
+// 鼠标移出继续滚动
+scrollBox.onmouseout = function(){
+    timer = setInterval(move,30);
+}
+</script>
+</body>
+</html>
