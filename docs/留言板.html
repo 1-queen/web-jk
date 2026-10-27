@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言板设计</title>
+    <style>
+        body {
+            background-color: #e8f6fc;
+        }
+        h1 {
+            color: #0033cc;
+            font-size:26px;
+        }
+        .top-right{
+            text-align:right;
+        }
+        .red-text{
+            color:red;
+        }
+        /*新增：外层容器，实现整体居中*/
+        .container{
+            width:800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- 全部内容放进居中容器 -->
+    <div class="container">
+        <div>
+            <h1 style="display: inline-block;">留言板</h1>
+            <span class="top-right" style="float:right;"><strong>科技工作者建言</strong></span>
+        </div>
+        <form>
+            <table>
+                <tr>
+                    <td class="red-text">发表留言</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>电子邮件:</td>
+                    <td><input type="text" size="50"></td>
+                </tr>
+                <tr>
+                    <td>分&nbsp;&nbsp;&nbsp;&nbsp;类：</td>
+                    <td>
+                        <span class="red-text">科技工作者建言</span>
+                        <input type="radio" name="secret" value="no">不保密
+                        <input type="radio" name="secret" value="yes">保密
+                        留言类型：
+                        <select>
+                            <option></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>留&nbsp;&nbsp;&nbsp;&nbsp;言:</td>
+                    <td><textarea rows="6" cols="45"></textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p style="font-size:14px;color:#000099;">注：如果您的留言不便公开，请选择"保密"选项，提交后可凭系统反馈给您的留言编号、查询密码和您的姓名查询回复。</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="提交">
+                        <input type="reset" value="清空">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <ul style="padding-left:20px;">
+                            <li>请遵守国家有关法律、法规，尊重网上道德，承担一切因您的行为而直接或间接引起的法律责任。</li>
+                            <li>本网站拥有管理笔名和留言的一切权利。</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
