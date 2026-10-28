@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12685e">
+  <meta name="description" content="发现成都的悠闲与热辣：熊猫基地、宽窄巷子、锦里、火锅与串串，开启一场巴适的成都之旅。">
+  <title>成都慢游 · 在烟火与竹影之间</title>
+  <style>
+    :root {
+      --green: #176f63;
+      --green-dark: #104c45;
+      --green-light: #e9f2ed;
+      --orange: #e98a4a;
+      --orange-light: #fff3e8;
+      --ink: #263a36;
+      --muted: #78827e;
+      --paper: #fbfaf6;
+      --white: #fff;
+      --radius: 22px;
+      --shadow: 0 12px 32px rgba(27, 67, 59, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 82px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1160px, calc(100% - 48px)); margin-inline: auto; }
+
+    /* 导航栏 */
+    .site-header {
+      position: fixed;
+      z-index: 20;
+      inset: 0 0 auto;
+      color: #fff;
+      transition: background .25s ease, box-shadow .25s ease, color .25s ease;
+    }
+    .site-header.scrolled {
+      color: var(--ink);
+      background: rgba(251, 250, 246, .96);
+      box-shadow: 0 4px 20px rgba(27, 67, 59, .08);
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 50% 50% 46% 46%;
+      color: var(--green-dark);
+      background: #e8f0df;
+      font-size: 22px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 14px;
+    }
+    .nav-links a { transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a:focus-visible { color: var(--orange); }
+    .nav-cta {
+      padding: 10px 19px;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 999px;
+      font-size: 13px;
+      transition: color .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .site-header.scrolled .nav-cta {
+      color: var(--green);
+      border-color: rgba(23,111,99,.35);
+    }
+    .nav-cta:hover { color: #fff; background: var(--orange); border-color: var(--orange); }
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      color: inherit;
+      background: rgba(255,255,255,.16);
+      cursor: pointer;
+    }
+    .site-header.scrolled .menu-toggle { background: var(--green-light); }
+
+    /* 首屏轮播 */
+    .hero {
+      position: relative;
+      min-height: min(760px, 92vh);
+      min-height: min(760px, 92svh);
+      overflow: hidden;
+      color: #fff;
+      background: var(--green-dark);
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+    .hero-slide.active { opacity: 1; visibility: visible; }
+    .hero-slide::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background:
+        linear-gradient(90deg, rgba(13, 43, 37, .78) 0%, rgba(13, 43, 37, .40) 48%, rgba(13, 43, 37, .12) 100%),
+        linear-gradient(0deg, rgba(13, 43, 37, .35), transparent 45%);
+      z-index: 1;
+    }
+    .hero-slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.04);
+      transition: transform 6s ease;
+    }
+    .hero-slide.active img { transform: scale(1); }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(1160px, calc(100% - 48px));
+      margin: 70px auto 0;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: #d7e9d8;
+      font-size: 13px;
+      letter-spacing: .18em;
+    }
+    .eyebrow::before { width: 28px; height: 1px; content: ""; background: var(--orange); }
+    .hero h1 {
+      max-width: 700px;
+      margin: 0;
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 1.16;
+      letter-spacing: .04em;
+    }
+    .hero h1 span { color: #f0ad76; }
+    .hero-copy { max-width: 470px; margin: 22px 0 30px; color: rgba(255,255,255,.84); font-size: 16px; }
+    .button {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 23px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--orange);
+      font-weight: 700;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: #d97636; }
+    .hero-controls {
+      position: absolute;
+      z-index: 3;
+      right: max(24px, calc((100% - 1160px) / 2));
+      bottom: 46px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-arrow, .hero-dot {
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.55);
+      color: #fff;
+      background: rgba(255,255,255,.08);
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .hero-arrow { width: 42px; height: 42px; border-radius: 50%; font-size: 18px; }
+    .hero-arrow:hover, .hero-dot:hover { background: var(--orange); transform: translateY(-2px); }
+    .hero-dot { width: 8px; height: 8px; padding: 0; border-radius: 50%; }
+    .hero-dot.active { width: 24px; border-color: var(--orange); background: var(--orange); }
+    .hero-count { margin-left: 6px; font-size: 12px; letter-spacing: .1em; }
+
+    /* 通用板块 */
+    .section { padding: 100px 0; }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 38px;
+    }
+    .section-kicker { margin: 0 0 8px; color: var(--orange); font-size: 13px; font-weight: 700; letter-spacing: .16em; }
+    .section-title { margin: 0; color: var(--green-dark); font-size: clamp(28px, 4vw, 40px); line-height: 1.3; }
+    .section-desc { max-width: 440px; margin: 0; color: var(--muted); font-size: 14px; }
+    .text-link { color: var(--green); font-size: 14px; font-weight: 700; white-space: nowrap; }
+    .text-link span { display: inline-block; margin-left: 6px; transition: transform .2s ease; }
+    .text-link:hover span { transform: translateX(4px); }
+
+    /* 景点卡片 */
+    .places-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .place-card {
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .place-card:hover, .food-card:hover, .guide-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 18px 38px rgba(27, 67, 59, .14);
+    }
+    .place-image { position: relative; height: 250px; overflow: hidden; }
+    .place-image img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .place-card:hover .place-image img { transform: scale(1.06); }
+    .tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      color: var(--green-dark);
+      background: rgba(255,255,255,.9);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .place-body { padding: 21px 22px 23px; }
+    .place-title-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .place-title { margin: 0; color: var(--green-dark); font-size: 21px; }
+    .place-rating { color: #d88742; font-size: 13px; white-space: nowrap; }
+    .place-body p { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+
+    /* 美食 */
+    .food-section { background: var(--green-light); }
+    .food-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; }
+    .food-card {
+      position: relative;
+      min-height: 300px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--green-dark);
+      box-shadow: var(--shadow);
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .food-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .food-card:hover img { transform: scale(1.05); }
+    .food-card::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      background: linear-gradient(0deg, rgba(20,35,29,.84), rgba(20,35,29,0) 72%);
+    }
+    .food-card-content { position: absolute; z-index: 1; right: 24px; bottom: 22px; left: 24px; color: #fff; }
+    .food-card-content span { color: #f1b07c; font-size: 12px; letter-spacing: .12em; }
+    .food-card-content h3 { margin: 5px 0; font-size: 25px; }
+    .food-card-content p { margin: 0; color: rgba(255,255,255,.8); font-size: 13px; }
+    .food-side { display: grid; grid-template-rows: 1fr 1fr; gap: 22px; }
+    .food-side .food-card { min-height: 139px; }
+    .food-side .food-card-content h3 { font-size: 21px; }
+
+    /* 游玩攻略 */
+    .guide-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .guide-card {
+      padding: 27px;
+      border: 1px solid #eeeee7;
+      border-radius: var(--radius);
+      background: #fff;
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .guide-number {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border-radius: 16px;
+      color: var(--green);
+      background: var(--green-light);
+      font-size: 21px;
+    }
+    .guide-card:nth-child(2) .guide-number { color: #c46c37; background: var(--orange-light); }
+    .guide-card h3 { margin: 19px 0 8px; color: var(--green-dark); font-size: 19px; }
+    .guide-card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .guide-meta { display: block; margin-top: 18px; color: #a0a7a2; font-size: 12px; }
+
+    /* 页脚 */
+    .site-footer { padding: 54px 0 24px; color: rgba(255,255,255,.78); background: #123f39; }
+    .footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 36px; padding-bottom: 36px; }
+    .footer-brand { color: #fff; }
+    .footer-copy { max-width: 340px; margin: 14px 0 0; font-size: 13px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 24px; font-size: 13px; }
+    .footer-links a:hover { color: #f0ad76; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 16px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.14); font-size: 12px; }
+    .back-top { color: #f0ad76; }
+
+    @media (max-width: 800px) {
+      .nav-links { gap: 18px; }
+      .nav-cta { display: none; }
+      .place-image { height: 210px; }
+      .food-grid { grid-template-columns: 1fr 1fr; }
+      .food-card { min-height: 260px; }
+      .food-side .food-card { min-height: 119px; }
+    }
+    @media (max-width: 620px) {
+      .container, .hero-content { width: min(100% - 36px, 480px); }
+      .nav { min-height: 66px; }
+      .menu-toggle { display: grid; place-items: center; font-size: 22px; }
+      .nav-links {
+        position: absolute;
+        top: 66px;
+        right: 18px;
+        left: 18px;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 10px;
+        border: 1px solid rgba(23,111,99,.1);
+        border-radius: 18px;
+        color: var(--ink);
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+      .nav-links.open { display: flex; flex-direction: column; }
+      .nav-links a { display: block; padding: 12px 14px; }
+      .hero { min-height: 680px; min-height: 88svh; }
+      .hero-content { margin-top: 50px; }
+      .hero h1 { font-size: clamp(42px, 12vw, 62px); }
+      .hero-copy { max-width: 340px; font-size: 14px; }
+      .hero-controls { right: 18px; bottom: 26px; }
+      .section { padding: 70px 0; }
+      .section-heading { align-items: flex-start; flex-direction: column; margin-bottom: 26px; }
+      .section-desc { font-size: 13px; }
+      .places-grid, .guide-grid { grid-template-columns: 1fr; gap: 16px; }
+      .place-image { height: 230px; }
+      .food-grid { grid-template-columns: 1fr; gap: 16px; }
+      .food-card { min-height: 260px; }
+      .food-side { grid-template-rows: none; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .food-side .food-card { min-height: 190px; }
+      .food-side .food-card-content { right: 14px; bottom: 15px; left: 14px; }
+      .food-side .food-card-content h3 { font-size: 17px; }
+      .food-side .food-card-content p { font-size: 12px; }
+      .guide-card { padding: 23px; }
+      .footer-main, .footer-bottom { flex-direction: column; }
+      .footer-links { gap: 15px 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <nav class="nav container" aria-label="主导航">
+      <a class="brand" href="#home" aria-label="成都慢游首页">
+        <span class="brand-mark" aria-hidden="true">竹</span>
+        <span>成都慢游</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home">首页</a></li>
+        <li><a href="#places">景点推荐</a></li>
+        <li><a href="#food">成都美食</a></li>
+        <li><a href="#guide">游玩攻略</a></li>
+      </ul>
+      <a class="nav-cta" href="#guide">开启成都之旅 ↗</a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="打开导航菜单" aria-expanded="false">☰</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home" aria-label="成都风光轮播">
+      <article class="hero-slide active" aria-hidden="false">
+        <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&amp;fit=crop&amp;w=2000&amp;q=85" alt="竹林中的大熊猫" fetchpriority="high">
+        <div class="hero-content">
+          <span class="eyebrow">A SLOW JOURNEY IN CHENGDU</span>
+          <h1>来成都，<br><span>过几天巴适日子</span></h1>
+          <p class="hero-copy">看熊猫慢悠悠地啃竹子，逛老街听茶馆里的闲话，再用一顿热辣火锅，把旅途的快乐续满。</p>
+          <a class="button" href="#places">发现成都 <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <article class="hero-slide" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&amp;fit=crop&amp;w=2000&amp;q=85" alt="成都街巷与传统建筑" loading="lazy">
+        <div class="hero-content">
+          <span class="eyebrow">OLD STREETS, NEW STORIES</span>
+          <h1>走进老街，<br><span>遇见成都烟火</span></h1>
+          <p class="hero-copy">从宽窄巷子的青砖黛瓦，到锦里的红灯笼与小吃香气，把慢悠悠的时光，留给一座有故事的城。</p>
+          <a class="button" href="#places">逛逛老成都 <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <article class="hero-slide" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&amp;fit=crop&amp;w=2000&amp;q=85" alt="热气腾腾的成都美食" loading="lazy">
+        <div class="hero-content">
+          <span class="eyebrow">TASTE THE SPICE</span>
+          <h1>一口热辣，<br><span>就爱上成都</span></h1>
+          <p class="hero-copy">牛油火锅翻滚着热情，街边串串藏着惊喜。来成都，跟着香味走，开启一场满足味蕾的旅行。</p>
+          <a class="button" href="#food">寻味成都 <span aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <div class="hero-controls" aria-label="轮播控制">
+        <button class="hero-arrow" id="prevSlide" type="button" aria-label="上一张">←</button>
+        <button class="hero-dot active" type="button" aria-label="第1张" aria-current="true"></button>
+        <button class="hero-dot" type="button" aria-label="第2张"></button>
+        <button class="hero-dot" type="button" aria-label="第3张"></button>
+        <span class="hero-count" id="heroCount" aria-live="polite">01 / 03</span>
+        <button class="hero-arrow" id="nextSlide" type="button" aria-label="下一张">→</button>
+      </div>
+    </section>
+
+    <section class="section" id="places">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">CITY WALK · 城市漫游</p>
+            <h2 class="section-title">把成都的好风景，慢慢收藏</h2>
+          </div>
+          <p class="section-desc">不必赶路，挑一处喜欢的地方停下来。和熊猫打个招呼，在老街巷里寻找成都的悠闲日常。</p>
+        </div>
+        <div class="places-grid">
+          <article class="place-card">
+            <div class="place-image">
+              <img src="https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="憨态可掬的大熊猫" loading="lazy">
+              <span class="tag">萌趣自然</span>
+            </div>
+            <div class="place-body">
+              <div class="place-title-row">
+                <h3 class="place-title">成都大熊猫基地</h3>
+                <span class="place-rating">★ 4.9</span>
+              </div>
+              <p>去竹林里看看国宝的日常，清晨是观察熊猫活动的好时机。</p>
+            </div>
+          </article>
+          <article class="place-card">
+            <div class="place-image">
+              <img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="古色古香的成都街巷" loading="lazy">
+              <span class="tag">老街慢逛</span>
+            </div>
+            <div class="place-body">
+              <div class="place-title-row">
+                <h3 class="place-title">宽窄巷子</h3>
+                <span class="place-rating">★ 4.7</span>
+              </div>
+              <p>在青砖老院与特色小店之间穿行，感受新旧交织的成都韵味。</p>
+            </div>
+          </article>
+          <article class="place-card">
+            <div class="place-image">
+              <img src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&amp;fit=crop&amp;w=900&amp;q=80" alt="灯火映照下的古风建筑" loading="lazy">
+              <span class="tag">夜游锦里</span>
+            </div>
+            <div class="place-body">
+              <div class="place-title-row">
+                <h3 class="place-title">锦里古街</h3>
+                <span class="place-rating">★ 4.8</span>
+              </div>
+              <p>华灯初上时最有味道，边逛边尝地道小吃，收获一段热闹夜色。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section food-section" id="food">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">SPICY &amp; DELICIOUS · 舌尖成都</p>
+            <h2 class="section-title">成都的快乐，先从吃开始</h2>
+          </div>
+          <p class="section-desc">一锅沸腾的热辣，一串刚刚好的麻香。慢慢吃，才是成都味道的正确打开方式。</p>
+        </div>
+        <div class="food-grid">
+          <article class="food-card">
+            <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="热闹丰盛的火锅美食" loading="lazy">
+            <div class="food-card-content">
+              <span>01 · 热辣担当</span>
+              <h3>成都火锅</h3>
+              <p>红汤翻滚，毛肚七上八下，热闹一整个夜晚。</p>
+            </div>
+          </article>
+          <div class="food-side">
+            <article class="food-card">
+              <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="成都街头特色小吃" loading="lazy">
+              <div class="food-card-content">
+                <span>02 · 街头滋味</span>
+                <h3>麻辣串串</h3>
+                <p>一签一味，越吃越有趣。</p>
+              </div>
+            </article>
+            <article class="food-card">
+              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="温暖惬意的成都餐馆" loading="lazy">
+              <div class="food-card-content">
+                <span>03 · 慢享时光</span>
+                <h3>茶馆小坐</h3>
+                <p>一杯盖碗茶，坐看成都闲生活。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="guide">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">TRAVEL NOTES · 出行灵感</p>
+            <h2 class="section-title">把行程安排得刚刚好</h2>
+          </div>
+          <p class="section-desc">留一点空白给偶遇，也留一点时间给自己。下面这份小攻略，让成都之行更轻松。</p>
+        </div>
+        <div class="guide-grid">
+          <article class="guide-card">
+            <div class="guide-number" aria-hidden="true">☀</div>
+            <h3>熊猫基地趁早去</h3>
+            <p>建议早上出发，气温舒适，也更容易看到熊猫活动。穿一双好走的鞋，慢慢逛更自在。</p>
+            <span class="guide-meta">推荐时长：半天 · 轻松漫步</span>
+          </article>
+          <article class="guide-card">
+            <div class="guide-number" aria-hidden="true">⌂</div>
+            <h3>老街留给下午和夜晚</h3>
+            <p>宽窄巷子适合边逛边歇，锦里夜色更迷人。记得给小吃和茶馆留出时间，不必排得太满。</p>
+            <span class="guide-meta">推荐时段：午后至夜晚 · 城市漫游</span>
+          </article>
+          <article class="guide-card">
+            <div class="guide-number" aria-hidden="true">♨</div>
+            <h3>火锅串串自由点单</h3>
+            <p>第一次尝试可以从微辣开始，搭配冰粉或酸梅汤解辣。多人同行，点菜分享更能尝到多种风味。</p>
+            <span class="guide-meta">美食提示：按需点单 · 量力而食</span>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <a class="brand footer-brand" href="#home">
+            <span class="brand-mark" aria-hidden="true">竹</span>
+            <span>成都慢游</span>
+          </a>
+          <p class="footer-copy">在竹影、老街与热辣烟火之间，发现一座值得慢慢喜欢的城市。</p>
+        </div>
+        <div class="footer-links" aria-label="页脚导航">
+          <a href="#places">景点推荐</a>
+          <a href="#food">成都美食</a>
+          <a href="#guide">游玩攻略</a>
+          <a href="#home">回到首页</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 成都慢游 · 愿每一段旅程都从容自在</span>
+        <a class="back-top" href="#home">回到顶部 ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 导航随页面滚动切换样式，移动端菜单点击后自动收起。
+    const header = document.getElementById("siteHeader");
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    function updateHeader() {
+      header.classList.toggle("scrolled", window.scrollY > 24);
+    }
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "关闭导航菜单" : "打开导航菜单");
+      menuToggle.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "打开导航菜单");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    // 自动轮播，支持圆点和前后按钮手动切换。
+    const slides = Array.from(document.querySelectorAll(".hero-slide"));
+    const dots = Array.from(document.querySelectorAll(".hero-dot"));
+    const heroCount = document.getElementById("heroCount");
+    const hero = document.querySelector(".hero");
+    let currentSlide = 0;
+    let slideTimer;
+
+    function showSlide(index) {
+      currentSlide = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        const isActive = i === currentSlide;
+        slide.classList.toggle("active", isActive);
+        slide.setAttribute("aria-hidden", String(!isActive));
+      });
+      dots.forEach((dot, i) => {
+        const isActive = i === currentSlide;
+        dot.classList.toggle("active", isActive);
+        if (isActive) dot.setAttribute("aria-current", "true");
+        else dot.removeAttribute("aria-current");
+      });
+      heroCount.textContent = `0${currentSlide + 1} / 0${slides.length}`;
+    }
+
+    function startAutoplay() {
+      window.clearInterval(slideTimer);
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        slideTimer = window.setInterval(() => showSlide(currentSlide + 1), 5000);
+      }
+    }
+
+    document.getElementById("prevSlide").addEventListener("click", () => {
+      showSlide(currentSlide - 1);
+      startAutoplay();
+    });
+    document.getElementById("nextSlide").addEventListener("click", () => {
+      showSlide(currentSlide + 1);
+      startAutoplay();
+    });
+    dots.forEach((dot, i) => {
+      dot.addEventListener("click", () => {
+        showSlide(i);
+        startAutoplay();
+      });
+    });
+
+    hero.addEventListener("mouseenter", () => window.clearInterval(slideTimer));
+    hero.addEventListener("mouseleave", startAutoplay);
+    hero.addEventListener("focusin", () => window.clearInterval(slideTimer));
+    hero.addEventListener("focusout", startAutoplay);
+    startAutoplay();
+  </script>
+</body>
+</html>
